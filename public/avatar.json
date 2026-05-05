@@ -1,0 +1,9 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "prompt": "A candid, naturally-lit color photograph of a 23-year-old woman, shoulder-up portrait, looking directly at the camera with a soft, friendly half-smile. She has shoulder-length light brown hair, light freckles across her nose, warm hazel eyes, no heavy makeup. She is wearing a simple cream-colored knit sweater. Editorial photography style, soft window light from her left side, gentle film-like color grading with slightly muted but warm tones. Background is a softly out-of-focus warm-toned interior \u2014 hint of pale wall and a blurred green plant \u2014 shallow depth of field, 50mm lens look. Believable, not glamorous, not retouched, looks like a real creative professional in her natural environment. Square crop.",
+  "aspect_ratio": "1:1",
+  "resolution": "1K",
+  "input_images": [],
+  "model_text": "",
+  "generated_at": "2026-05-05T18:49:28+0200"
+}

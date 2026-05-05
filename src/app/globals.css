@@ -16,54 +16,136 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Liquid-glass primitives ---------------------------------------------------*/
+/* ---------------------------------------------------------------------------
+   Liquid glass
 
-/* Frosted, slightly saturated translucent surface with a thin specular shine
-   along the top edge and a soft outer drop shadow for depth.                 */
+   Multi-layer recipe approximating iOS 26 / macOS Tahoe:
+   - high blur + saturation on backdrop
+   - vertical gradient surface tint (brighter on top)
+   - bright inset top edge (specular shine)
+   - faint dark inset bottom edge (depth)
+   - close + far drop shadows
+   - SVG displacement filter via `--lg-distort` for subtle refraction
+--------------------------------------------------------------------------- */
+
 .glass {
-  background: color-mix(in srgb, white 7%, transparent);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid color-mix(in srgb, white 14%, transparent);
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.04)
+    );
+  backdrop-filter: blur(28px) saturate(190%) brightness(1.05);
+  -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, white 4%, transparent),
-    0 10px 40px rgba(0, 0, 0, 0.45);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.40),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.10),
+    0 1px 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 18px rgba(0, 0, 0, 0.18),
+    0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+/* Diagonal specular sheen — the wet "lens" highlight that makes it feel like
+   an actual piece of glass rather than a frosted overlay.                    */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 18%,
+    rgba(255, 255, 255, 0) 42%,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+.glass > * {
+  position: relative;
+  z-index: 1;
 }
 
 .glass-strong {
-  background: color-mix(in srgb, white 10%, transparent);
-  backdrop-filter: blur(36px) saturate(200%);
-  -webkit-backdrop-filter: blur(36px) saturate(200%);
-  border: 1px solid color-mix(in srgb, white 18%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, white 5%, transparent),
-    0 24px 60px rgba(0, 0, 0, 0.55);
-}
-
-.glass-hover:hover {
-  background: color-mix(in srgb, white 11%, transparent);
-  border-color: color-mix(in srgb, white 22%, transparent);
-}
-
-/* Background "stage" — colored radial blobs that the glass elements blur over.
-   Without this the glass effect is invisible.                                */
-.stage {
-  position: fixed;
-  inset: 0;
-  z-index: -10;
-  overflow: hidden;
+  position: relative;
+  isolation: isolate;
   background:
-    radial-gradient(60rem 60rem at 0% 0%, rgba(16, 185, 129, 0.30), transparent 60%),
-    radial-gradient(50rem 50rem at 100% 100%, rgba(139, 92, 246, 0.22), transparent 60%),
-    radial-gradient(40rem 40rem at 50% 30%, rgba(56, 189, 248, 0.16), transparent 60%),
-    #0a0a0a;
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.07)
+    );
+  backdrop-filter: blur(48px) saturate(220%) brightness(1.06);
+  -webkit-backdrop-filter: blur(48px) saturate(220%) brightness(1.06);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 1px 2px 0 rgba(255, 255, 255, 0.05),
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 36px 80px rgba(0, 0, 0, 0.55);
 }
 
-/* Subtle entrance animations -----------------------------------------------*/
+.glass-strong::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.12) 16%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 70%,
+    rgba(255, 255, 255, 0.10) 100%
+  );
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+.glass-strong > * {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-hover {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+.glass-hover:hover {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.08)
+    );
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.50),
+    inset 0 -1px 0 0 rgba(0, 0, 0, 0.10),
+    0 1px 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 22px rgba(0, 0, 0, 0.22),
+    0 24px 60px rgba(0, 0, 0, 0.40);
+}
+
+/* ---------------------------------------------------------------------------
+   Entrance animations
+--------------------------------------------------------------------------- */
 @keyframes glass-pop {
   from {
     opacity: 0;
@@ -78,18 +160,25 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.animate-glass-pop {
-  animation: glass-pop 280ms cubic-bezier(0.32, 0.72, 0, 1);
-}
-.animate-overlay-fade {
-  animation: overlay-fade 200ms ease-out;
-}
-
-/* Mobile bottom-sheet variant of the modal */
 @keyframes sheet-up {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.animate-glass-pop {
+  animation: glass-pop 320ms cubic-bezier(0.32, 0.72, 0, 1) backwards;
+}
+.animate-overlay-fade {
+  animation: overlay-fade 200ms ease-out;
+}
 .animate-sheet-up {
-  animation: sheet-up 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  animation: sheet-up 360ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-glass-pop,
+  .animate-overlay-fade,
+  .animate-sheet-up {
+    animation: none;
+  }
 }

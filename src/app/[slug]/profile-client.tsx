@@ -107,15 +107,17 @@ export default function ProfileClient({ profile }: { profile: ClientProfile }) {
     <main className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center px-5 py-10 sm:py-14">
       {showInApp && <InAppBanner />}
 
-      <div className="glass animate-glass-pop mb-5 size-24 overflow-hidden rounded-full p-1">
-        <Image
-          src={profile.avatar}
-          alt=""
-          width={192}
-          height={192}
-          className="size-full rounded-full object-cover"
-          priority
-        />
+      <div className="animate-glass-pop mb-5 size-28 rounded-full p-[3px] ring-1 ring-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.45)]">
+        <div className="size-full overflow-hidden rounded-full ring-1 ring-white/15">
+          <Image
+            src={profile.avatar}
+            alt=""
+            width={224}
+            height={224}
+            className="size-full object-cover"
+            priority
+          />
+        </div>
       </div>
 
       <h1 className="animate-glass-pop text-xl font-semibold">{profile.displayName}</h1>

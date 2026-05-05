@@ -1,0 +1,9 @@
+{
+  "model": "gemini-3.1-flash-image-preview",
+  "prompt": "A cinematic, dreamlike landscape photograph in 16:9 aspect: rolling coastal mountain valley at golden hour, layers of soft hills receding into atmospheric haze, a gentle band of ocean visible in the distance under a pastel sky of peach, lavender, and rose blending into deep emerald-teal foreground hills. Low warm sun rays cast long soft shadows. Wisps of low mist roll between the slopes. Painterly, atmospheric, slightly dreamy, softly saturated colors with smooth gradients across the sky. No people, no buildings, no text, no logos \u2014 pure nature, light, and atmosphere. Composition optimized as a phone/desktop wallpaper, with smooth color regions that look beautiful when blurred behind glass UI. Premium, aspirational, Apple-style nature wallpaper aesthetic.",
+  "aspect_ratio": "16:9",
+  "resolution": "2K",
+  "input_images": [],
+  "model_text": "",
+  "generated_at": "2026-05-05T18:49:49+0200"
+}
