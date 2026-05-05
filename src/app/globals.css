@@ -15,4 +15,81 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Liquid-glass primitives ---------------------------------------------------*/
+
+/* Frosted, slightly saturated translucent surface with a thin specular shine
+   along the top edge and a soft outer drop shadow for depth.                 */
+.glass {
+  background: color-mix(in srgb, white 7%, transparent);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid color-mix(in srgb, white 14%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, white 4%, transparent),
+    0 10px 40px rgba(0, 0, 0, 0.45);
+}
+
+.glass-strong {
+  background: color-mix(in srgb, white 10%, transparent);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid color-mix(in srgb, white 18%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, white 5%, transparent),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.glass-hover:hover {
+  background: color-mix(in srgb, white 11%, transparent);
+  border-color: color-mix(in srgb, white 22%, transparent);
+}
+
+/* Background "stage" — colored radial blobs that the glass elements blur over.
+   Without this the glass effect is invisible.                                */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 60rem at 0% 0%, rgba(16, 185, 129, 0.30), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 100%, rgba(139, 92, 246, 0.22), transparent 60%),
+    radial-gradient(40rem 40rem at 50% 30%, rgba(56, 189, 248, 0.16), transparent 60%),
+    #0a0a0a;
+}
+
+/* Subtle entrance animations -----------------------------------------------*/
+@keyframes glass-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes overlay-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-glass-pop {
+  animation: glass-pop 280ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.animate-overlay-fade {
+  animation: overlay-fade 200ms ease-out;
+}
+
+/* Mobile bottom-sheet variant of the modal */
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-sheet-up {
+  animation: sheet-up 320ms cubic-bezier(0.32, 0.72, 0, 1);
 }

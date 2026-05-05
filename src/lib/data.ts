@@ -22,11 +22,11 @@ const profiles: Profile[] = [
     avatar: "/avatar.jpg",
     theme: { accent: "#10b981" },
     links: [
-      { id: "l1", label: "Latest single — out now", url: "https://music.example.com/ava/latest" },
-      { id: "l2", label: "Tour dates 2026", url: "https://tour.example.com/ava" },
-      { id: "l3", label: "Merch store", url: "https://shop.example.com/ava" },
-      { id: "l4", label: "Behind-the-scenes (18+)", url: "https://members.example.com/ava", ageGated: true },
-      { id: "l5", label: "Newsletter", url: "https://news.example.com/ava" },
+      { id: "l1", label: "Latest single — listen on Spotify", url: "https://open.spotify.com/" },
+      { id: "l2", label: "Tour dates 2026 — Songkick", url: "https://www.songkick.com/" },
+      { id: "l3", label: "Merch — Bandcamp store", url: "https://bandcamp.com/" },
+      { id: "l4", label: "Behind-the-scenes (18+) — Patreon", url: "https://www.patreon.com/", ageGated: true },
+      { id: "l5", label: "Newsletter — Substack", url: "https://substack.com/" },
     ],
   },
 ];
